@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
-import {auth} from '../../firebase';
+import {auth, googleAuthProvider, facebookAuthProvider} from '../../firebase';
 import {toast, ToastContainer} from 'react-toastify';
 import { Input, Space, Button } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone,MailOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone,MailOutlined,GoogleOutlined,FacebookOutlined } from '@ant-design/icons';
 import {useDispatch} from 'react-redux';
 
 const {Password} = Input;
@@ -10,8 +10,8 @@ const {Password} = Input;
 
 const Login = ({history}) =>{
 
-const [email,setEmail] = useState("sgfarrera@gmail.com");
-const [password,setPassword] = useState("12345678");
+const [email,setEmail] = useState("");
+const [password,setPassword] = useState("");
 const [loading,setLoading] = useState(false);
 
 const dispatch = useDispatch();
@@ -34,6 +34,7 @@ const handleSubmit = async (e) =>{
         type: "LOGGED_IN_USER",
         payload:{
             email: user.email,
+            displayName: user.displayName,
             token: idTokenResult.token
         }
     });
@@ -48,6 +49,50 @@ const handleSubmit = async (e) =>{
  }
 
 };
+
+const googleLogin = async () =>{
+    auth.signInWithPopup(googleAuthProvider)
+    .then( async (result) =>{
+        const {user} = result
+        const idTokenResult = await user.getIdTokenResult()
+
+        dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+                email: user.email,
+                token: idTokenResult.token               
+            }
+        });
+
+        history.push("/")
+        
+    }).catch((error) => {
+        console.log(error)
+        toast.error(error.message)
+    })
+}
+
+
+const facebookLogin = async () =>{
+    auth.signInWithPopup(facebookAuthProvider)
+    .then(async (result) =>{
+        const {user} = result
+        const idTokenResult = await user.getIdTokenResult()
+
+        dispatch({
+            type:"LOGGED_IN_USER",
+            payload:{
+                email: user.email,
+                token: idTokenResult.token
+            }
+        });
+
+        history.push("/")
+    }).catch((error) =>{
+        console.log(error)
+        toast.error(error.message)
+    })
+}
 
 const loginForm = () => <form onSubmit={handleSubmit}>
 
@@ -65,7 +110,7 @@ const loginForm = () => <form onSubmit={handleSubmit}>
             type="password"
             className="form-control"
             value={password}
-            placeholder="Enter your password..."
+            placeholder="Your password..."
             iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             onChange={s => setPassword(s.target.value)}
             autoFocus
@@ -77,7 +122,7 @@ const loginForm = () => <form onSubmit={handleSubmit}>
 
   
     <br />
-    <Button onClick={handleSubmit} type="primary" className="mb-3" block shape="round" icon={<MailOutlined />}  size="large" disabled={!email || password.length < 6}>Login with Email / Password</Button>
+    <Button onClick={handleSubmit} type="secondary" className="mb-3" block shape="round" icon={<MailOutlined />}  size="large" disabled={!email || password.length < 6}>Login with Email / Password</Button>
 
 </form>
 
@@ -86,13 +131,18 @@ const loginForm = () => <form onSubmit={handleSubmit}>
         <div className="container p-5">
             <div className="row">
                 <div className="col-md-6 offset-md-3">
-                    <h4>
-                        Login
-                    </h4>
+                   
+                    {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Login</h4> }
 
                     <ToastContainer />
                   
                     {loginForm()}
+
+
+
+                    <Button onClick={googleLogin} type="danger" className="mb-3" block shape="round" icon={<GoogleOutlined />}  size="large" >Login with Google</Button>
+
+                    <Button onClick={facebookLogin} type="primary" className="mb-3" block shape="round" icon={<FacebookOutlined />}  size="large" >Login with Facebook</Button>
                 </div>
             </div>
 

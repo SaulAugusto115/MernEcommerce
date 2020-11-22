@@ -37,6 +37,7 @@ useEffect(() => {
           type: 'LOGGED_IN_USER',
           payload: {
             email: user.email,
+            displayName:user.displayName,
             token: idTokenResult.token
 
           }
