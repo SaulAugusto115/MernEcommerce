@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {auth} from '../../firebase';
-import {toast} from 'react-toastify';
+import {toast, ToastContainer} from 'react-toastify';
 
 
 const Register = () =>{
@@ -45,6 +45,8 @@ const registerForm = () => <form onSubmit={handleSubmit}>
                     <h4>
                         Register
                     </h4>
+
+                    <ToastContainer />
                   
                     {registerForm()}
                 </div>
