@@ -1,20 +1,32 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {auth, googleAuthProvider, facebookAuthProvider} from '../../firebase';
 import {toast, ToastContainer} from 'react-toastify';
 import { Input, Space, Button } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone,MailOutlined,GoogleOutlined,FacebookOutlined } from '@ant-design/icons';
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
+import {Link} from 'react-router-dom'
 
 const {Password} = Input;
 
 
 const Login = ({history}) =>{
 
-const [email,setEmail] = useState("");
-const [password,setPassword] = useState("");
+const [email,setEmail] = useState("sgfarrera@gmail.com");
+const [password,setPassword] = useState("Muukalainen115");
 const [loading,setLoading] = useState(false);
 
 const dispatch = useDispatch();
+
+
+const {user} = useSelector((state) => ({...state}))
+
+
+useEffect(() =>{
+
+    if(user && user.token)  history.push("/");
+    
+
+},[user]);
 
 const handleSubmit = async (e) =>{
   e.preventDefault();
@@ -34,7 +46,6 @@ const handleSubmit = async (e) =>{
         type: "LOGGED_IN_USER",
         payload:{
             email: user.email,
-            displayName: user.displayName,
             token: idTokenResult.token
         }
     });
@@ -60,6 +71,7 @@ const googleLogin = async () =>{
             type: "LOGGED_IN_USER",
             payload: {
                 email: user.email,
+                displayName: user.displayName,
                 token: idTokenResult.token               
             }
         });
@@ -83,6 +95,7 @@ const facebookLogin = async () =>{
             type:"LOGGED_IN_USER",
             payload:{
                 email: user.email,
+                displayName: user.displayName,
                 token: idTokenResult.token
             }
         });
@@ -143,6 +156,10 @@ const loginForm = () => <form onSubmit={handleSubmit}>
                     <Button onClick={googleLogin} type="danger" className="mb-3" block shape="round" icon={<GoogleOutlined />}  size="large" >Login with Google</Button>
 
                     <Button onClick={facebookLogin} type="primary" className="mb-3" block shape="round" icon={<FacebookOutlined />}  size="large" >Login with Facebook</Button>
+
+
+
+                    <Link to="/forgot/password" className="text-danger float-right">Forgot Password ?</Link>
                 </div>
             </div>
 

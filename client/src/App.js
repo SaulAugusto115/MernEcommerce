@@ -13,6 +13,7 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Header from './components/nav/Header';
 import RegisterComplete from './pages/auth/RegisterComplete';
+import ForgotPassword from './pages/auth/ForgotPassword';
 
 
 //firebase imports
@@ -37,10 +38,9 @@ useEffect(() => {
           type: 'LOGGED_IN_USER',
           payload: {
             email: user.email,
-            displayName:user.displayName,
-            token: idTokenResult.token
-
-          }
+            displayName: user.displayName,
+            token: idTokenResult.token,
+          },
         });
 
         //cleanup
@@ -62,6 +62,7 @@ useEffect(() => {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/register/complete" component={RegisterComplete} />
+          <Route exact path="/forgot/password"component={ForgotPassword} />
         </Switch>
     </>
   );

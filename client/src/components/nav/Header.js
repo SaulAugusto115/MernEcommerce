@@ -1,10 +1,12 @@
-import React,{useState} from 'react';
+import React,{useReducer, useState} from 'react';
 import {Menu} from 'antd';
 import { AppstoreOutlined, SettingOutlined,UserOutlined,UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import firebase from 'firebase';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
+import logo from '../../images/logofarrera.PNG'
+import '../../styles.css'
 
 const { SubMenu, Item } = Menu;
 
@@ -35,11 +37,19 @@ const Header = () =>{
     }
 
     return (
+
+
+
+        
+
         <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
 
-        <Item key="home" icon={<AppstoreOutlined />}>
+        <Item key="home"  icon={<AppstoreOutlined />}>
          {/* <Link to="/">Home - {JSON.stringify(user)}</Link> */}
-          <Link to="/">Home</Link>
+         {/* <AppstoreOutlined style={{ fontSize: "30px" }} /> */}
+         {/* <Link to="/"><img src={logo} /></Link> */}
+         <Link to="/">Home</Link>
+         
         </Item>
 
         {!user && (
@@ -65,7 +75,7 @@ const Header = () =>{
         {user && (
 
             
-        <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.email && user.email.split('@')[0]} className="float-right">
+        <SubMenu key="SubMenu" icon={<SettingOutlined />} title={user.displayName || user.email && user.email.split('@')[0]} className="float-right">
         
         <Item key="setting:1">Option 1</Item>
         <Item key="setting:2">Option 2</Item>

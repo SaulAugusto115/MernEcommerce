@@ -3,6 +3,7 @@ import {auth} from '../../firebase';
 import {toast} from 'react-toastify';
 import { Input, Space } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import {useSelector}from 'react-redux'
 
 const {Password} = Input;
 
@@ -11,11 +12,19 @@ const RegisterComplete = ({history}) =>{
 const [email,setEmail] = useState("");
 const [password,setPassword] = useState('');
 
+const {user} =useSelector((state) => ({...state}))
+
 useEffect(() => {
     setEmail(window.localStorage.getItem('emailForRegistration'))
     console.log(window.location.href);
     console.log(window.localStorage.getItem('emailForRegistration'))
-}, [])
+
+    if(user && user.token)
+    {
+        history.push("/")
+    }
+
+}, [user])
 
 const handleSubmit = async (e) =>{
   //()
