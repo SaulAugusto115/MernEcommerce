@@ -6,7 +6,11 @@ import { EyeInvisibleOutlined, EyeTwoTone,MailOutlined,GoogleOutlined,FacebookOu
 import {useDispatch,useSelector} from 'react-redux';
 import {Link} from 'react-router-dom'
 
+//import axios
+import axios from 'axios'
+
 const {Password} = Input;
+
 
 
 const Login = ({history}) =>{
@@ -28,6 +32,20 @@ useEffect(() =>{
 
 },[user]);
 
+
+
+
+
+const createOrUpdateUser = async (authtoken) =>{
+    return await axios.post('http://localhost:8000/api/create-or-update-user', {}, {
+        headers:{
+            authtoken,
+
+        }
+    });
+};
+
+
 const handleSubmit = async (e) =>{
   e.preventDefault();
   setLoading(true);
@@ -42,7 +60,18 @@ const handleSubmit = async (e) =>{
     const {user} = result;
     const idTokenResult = await user.getIdTokenResult();
 
-    dispatch({
+    createOrUpdateUser(idTokenResult.token)
+    .then(
+
+        (res) => console.log('CreaTE or Update RES',res)
+
+
+    ).catch((error) =>{
+        console.log("ERROR" ,error)
+    });
+    
+
+    /*dispatch({
         type: "LOGGED_IN_USER",
         payload:{
             email: user.email,
@@ -50,7 +79,7 @@ const handleSubmit = async (e) =>{
         }
     });
 
-    history.push("/");
+    history.push("/"); */
 
  }catch(error)
  {
