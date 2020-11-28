@@ -1,8 +1,10 @@
 const mongoose = require('mongoose')
+//import mongoose from 'mongoose';
+const {Schema} = mongoose;
 const {ObjectId} = mongoose.Schema;
 
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     name: String,
     email:{
         type:String,
@@ -23,7 +25,7 @@ const userSchema = new mongoose.Schema({
         state: String,
         zip: Number,
         phoneNumber: Number,
-        required: true
+        //required: true
     },
     //wishlist: [{type: ObjectId, ref: "Product"}],
     //address: String,

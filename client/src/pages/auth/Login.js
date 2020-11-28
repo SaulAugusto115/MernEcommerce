@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, useReducer} from 'react';
 import {auth, googleAuthProvider, facebookAuthProvider} from '../../firebase';
 import {toast, ToastContainer} from 'react-toastify';
 import { Input, Space, Button } from 'antd';
@@ -7,7 +7,7 @@ import {useDispatch,useSelector} from 'react-redux';
 import {Link} from 'react-router-dom'
 
 //import axios
-import axios from 'axios'
+import {createOrUpdateUser} from '../../functions/auth'
 
 const {Password} = Input;
 
@@ -15,8 +15,8 @@ const {Password} = Input;
 
 const Login = ({history}) =>{
 
-const [email,setEmail] = useState("sgfarrera@gmail.com");
-const [password,setPassword] = useState("Muukalainen115");
+const [email,setEmail] = useState("");
+const [password,setPassword] = useState("");
 const [loading,setLoading] = useState(false);
 
 const dispatch = useDispatch();
@@ -32,18 +32,6 @@ useEffect(() =>{
 
 },[user]);
 
-
-
-
-
-const createOrUpdateUser = async (authtoken) =>{
-    return await axios.post('http://localhost:8000/api/create-or-update-user', {}, {
-        headers:{
-            authtoken,
-
-        }
-    });
-};
 
 
 const handleSubmit = async (e) =>{
@@ -63,7 +51,16 @@ const handleSubmit = async (e) =>{
     createOrUpdateUser(idTokenResult.token)
     .then(
 
-        (res) => console.log('CreaTE or Update RES',res)
+        (res) => dispatch({
+            type:"LOGGED_IN_USER",
+            payload:{
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+            }
+        })
 
 
     ).catch((error) =>{
@@ -96,13 +93,24 @@ const googleLogin = async () =>{
         const {user} = result
         const idTokenResult = await user.getIdTokenResult()
 
-        dispatch({
-            type: "LOGGED_IN_USER",
-            payload: {
-                email: user.email,
-                displayName: user.displayName,
-                token: idTokenResult.token               
+        createOrUpdateUser(idTokenResult.token)
+        .then(
+
+        (res) => dispatch({
+            type:"LOGGED_IN_USER",
+            payload:{
+                name: res.data.name,
+                email: res.data.email,
+                //displayName: res.data.displayName,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
             }
+        })
+
+
+        ).catch((error) =>{
+            console.log("ERROR" ,error)
         });
 
         history.push("/")
@@ -119,14 +127,24 @@ const facebookLogin = async () =>{
     .then(async (result) =>{
         const {user} = result
         const idTokenResult = await user.getIdTokenResult()
+        createOrUpdateUser(idTokenResult.token)
+        .then(
 
-        dispatch({
+        (res) => dispatch({
             type:"LOGGED_IN_USER",
             payload:{
-                email: user.email,
-                displayName: user.displayName,
-                token: idTokenResult.token
+                name: res.data.name,
+                email: res.data.email,
+                //displayName: res.data.displayName,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
             }
+        })
+
+
+        ).catch((error) =>{
+            console.log("ERROR" ,error)
         });
 
         history.push("/")

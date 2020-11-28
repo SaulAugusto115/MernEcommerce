@@ -3,9 +3,16 @@ import {auth} from '../../firebase';
 import {toast} from 'react-toastify';
 import { Input, Space } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import {useSelector}from 'react-redux'
+import {useDispatch,useSelector}from 'react-redux'
+
+import {createOrUpdateUser} from '../../functions/auth'
 
 const {Password} = Input;
+
+
+
+
+
 
 const RegisterComplete = ({history}) =>{
 
@@ -13,6 +20,8 @@ const [email,setEmail] = useState("");
 const [password,setPassword] = useState('');
 
 const {user} =useSelector((state) => ({...state}))
+
+const dispatch  = useDispatch()
 
 useEffect(() => {
     setEmail(window.localStorage.getItem('emailForRegistration'))
@@ -26,26 +35,11 @@ useEffect(() => {
 
 }, [user])
 
+
+
 const handleSubmit = async (e) =>{
-  //()
+
   e.preventDefault();
-
-  //console.log('ENV -->',process.env.REACT_APP_REGISTER_REDIRECT_URL);
-
-  /*const config ={
-        url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-        handleCodeInApp: true
-
-  }
-
-  await auth.sendSignInLinkToEmail(email,config);
-  toast.success(`Email is sent to ${email}, Click to link to complete your registration`);
-
-  //save user email inb local storage
-  window.localStorage.setItem('emailForRegistration', email);
-
-  //clear state
-  setEmail(""); */
 
 
   //VALIDATION**//
@@ -84,7 +78,24 @@ const handleSubmit = async (e) =>{
 
         
         //redux store
-        console.log("user",user,'idTokenResult',idTokenResult)
+        //console.log("user",user,'idTokenResult',idTokenResult)
+
+
+        createOrUpdateUser(idTokenResult.token)
+        .then(
+            (res) => dispatch({
+                type:"LOGGED_IN_USER",
+                payload:{
+                    name: user.data.name,
+                    email: user.data.email,
+                    token: idTokenResult.token,
+                    role: res.data.role,
+                    _id: res.data._id,
+                }
+            })
+        ).catch((error) =>{
+            console.log("ERROR",error)
+        })
 
 
         //rediret
