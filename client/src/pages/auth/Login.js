@@ -13,6 +13,7 @@ const {Password} = Input;
 
 
 
+
 const Login = ({history}) =>{
 
 const [email,setEmail] = useState("");
@@ -23,6 +24,17 @@ const dispatch = useDispatch();
 
 
 const {user} = useSelector((state) => ({...state}))
+
+
+
+const roleBasedRedirect = (res) =>{
+    if(res.data.role === "admin")
+    {
+        history.push("/admin/dashboard")
+    }else{
+        history.push("/user/history")
+    }
+}
 
 
 useEffect(() =>{
@@ -51,19 +63,22 @@ const handleSubmit = async (e) =>{
     createOrUpdateUser(idTokenResult.token)
     .then(
 
-        (res) => dispatch({
-            type:"LOGGED_IN_USER",
-            payload:{
-                name: res.data.name,
-                email: res.data.email,
-                token: idTokenResult.token,
-                role: res.data.role,
-                _id: res.data._id,
-            }
-        })
+        (res) => {
+            dispatch({
+                type:"LOGGED_IN_USER",
+                payload:{
+                    name: res.data.name,
+                    email: res.data.email,
+                    token: idTokenResult.token,
+                    role: res.data.role,
+                    _id: res.data._id,
+                }
+            });
 
 
-    ).catch((error) =>{
+            roleBasedRedirect(res)
+
+        }).catch((error) =>{
         console.log("ERROR" ,error)
     });
     
@@ -77,6 +92,8 @@ const handleSubmit = async (e) =>{
     });
 
     history.push("/"); */
+
+    
 
  }catch(error)
  {
@@ -96,7 +113,7 @@ const googleLogin = async () =>{
         createOrUpdateUser(idTokenResult.token)
         .then(
 
-        (res) => dispatch({
+        (res) => {dispatch({
             type:"LOGGED_IN_USER",
             payload:{
                 name: res.data.name,
@@ -108,8 +125,9 @@ const googleLogin = async () =>{
             }
         })
 
+        roleBasedRedirect(res)
 
-        ).catch((error) =>{
+        }).catch((error) =>{
             console.log("ERROR" ,error)
         });
 
@@ -130,7 +148,7 @@ const facebookLogin = async () =>{
         createOrUpdateUser(idTokenResult.token)
         .then(
 
-        (res) => dispatch({
+        (res) =>{ dispatch({
             type:"LOGGED_IN_USER",
             payload:{
                 name: res.data.name,
@@ -142,8 +160,8 @@ const facebookLogin = async () =>{
             }
         })
 
-
-        ).catch((error) =>{
+        roleBasedRedirect(res)
+    }).catch((error) =>{
             console.log("ERROR" ,error)
         });
 
