@@ -15,7 +15,13 @@ import Header from './components/nav/Header';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import History from './pages/user/History'
+import Password from './pages/user/Password'
+import Wishlist from './pages/user/Wishlist'
 import UseRoute from './components/routes/UserRoute'
+import AdminRoute from './components/routes/AdminRoute'
+
+//admin dashbaord
+import AdminDashboard from './pages/admin/AdminDashboard'
 
 
 //firebase imports
@@ -86,6 +92,9 @@ useEffect(() => {
           <Route exact path="/register/complete" component={RegisterComplete} />
           <Route exact path="/forgot/password"component={ForgotPassword} />
           <UseRoute exact path="/user/history" component={History} />
+          <UseRoute exact path="/user/password" component={Password} />
+          <UseRoute exact path="/user/wishlist" component={Wishlist} />
+          <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
         </Switch>
     </>
   );
