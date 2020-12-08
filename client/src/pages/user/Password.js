@@ -48,7 +48,6 @@ const Password = () => {
                     onChange={s => setPassword(s.target.value)}
                     autoFocus
                     disabled={loading}
-                    value={password}
                  />
 
                 </div>
