@@ -20,6 +20,9 @@ import Wishlist from './pages/user/Wishlist'
 import UseRoute from './components/routes/UserRoute'
 import AdminRoute from './components/routes/AdminRoute'
 
+//admin dashboard actions
+import CategoryCreate from './pages/admin/category/CategoryCreate'
+
 //admin dashbaord
 import AdminDashboard from './pages/admin/AdminDashboard'
 
@@ -94,7 +97,10 @@ useEffect(() => {
           <UseRoute exact path="/user/history" component={History} />
           <UseRoute exact path="/user/password" component={Password} />
           <UseRoute exact path="/user/wishlist" component={Wishlist} />
+
+          {/* Admin Routes*/}
           <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
+          <AdminRoute exact path="/admin/category" component={CategoryCreate} />
         </Switch>
     </>
   );
