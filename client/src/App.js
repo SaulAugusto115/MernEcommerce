@@ -22,6 +22,7 @@ import AdminRoute from './components/routes/AdminRoute'
 
 //admin dashboard actions
 import CategoryCreate from './pages/admin/category/CategoryCreate'
+import CategoryUpdate from './pages/admin/category/CategoryUpdate'
 
 //admin dashbaord
 import AdminDashboard from './pages/admin/AdminDashboard'
@@ -101,6 +102,7 @@ useEffect(() => {
           {/* Admin Routes*/}
           <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
           <AdminRoute exact path="/admin/category" component={CategoryCreate} />
+          <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
         </Switch>
     </>
   );

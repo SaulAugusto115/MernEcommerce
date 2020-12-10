@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export const getCategories = async () => await axios.get("http://localhost:8000/api/categories")
 
-export const getCategory = async (slug) => await axios.get("http://localhost:8000/api/category/",{slug})
+export const getCategory = async (slug) => await axios.get(`http://localhost:8000/api/category/${slug}`)
 
 export const removeCategory = async (slug,authtoken) => await axios.delete(`http://localhost:8000/api/category/${slug}`,{
     headers:{
@@ -11,7 +11,7 @@ export const removeCategory = async (slug,authtoken) => await axios.delete(`http
     }
 })
 
-export const updateCategory = async (slug,category,authtoken) => await axios.put("http://localhost:8000/api/category/",{slug},{
+export const updateCategory = async (slug,category,authtoken) => await axios.put(`http://localhost:8000/api/category/${slug}`,category,{
     headers:{
         authtoken
     }

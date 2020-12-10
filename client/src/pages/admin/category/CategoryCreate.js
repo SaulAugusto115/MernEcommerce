@@ -5,6 +5,8 @@ import {useSelector} from 'react-redux'
 import {createCategory,getCategories,removeCategory} from '../../../functions/category'
 import {Link} from 'react-router-dom'
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
+import CategoryForm from '../../../components/forms/CategoryForm'
+import LocalSearch from '../../../components/forms/LocalSearch'
 
 
 const CategoryCreate = () =>{
@@ -12,6 +14,10 @@ const CategoryCreate = () =>{
 const {user} = useSelector((state) => ({...state}))
 const [name,setName] = useState("")
 const [loading,setLoading] = useState(false)
+
+//searching filtering Step 1
+const [keyword, setKeyword] = useState("")
+
 
 const [categories,setCategories] = useState([])
 
@@ -82,8 +88,19 @@ const handleRemove = async (slug) =>{
     }
 }
 
+//STEP 3
+/*const handleSearchChange = (e) =>{
+    e.preventDefault()
+    setKeyword(e.target.value.toLowerCase()) 
+} */
 
-const categoryForm = () => ( <form onSubmit={handleSubmit}>
+
+//STEP 4
+const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword);
+
+
+
+/*const categoryForm = () => ( <form onSubmit={handleSubmit}>
 
     <div className="form-group">
         <label>Name</label>
@@ -94,7 +111,7 @@ const categoryForm = () => ( <form onSubmit={handleSubmit}>
     </div>
 
 
-</form> )
+</form> ) */
 
 
 
@@ -106,11 +123,21 @@ const categoryForm = () => ( <form onSubmit={handleSubmit}>
             <div className="col-md-2"><AdminNav /></div>
             <div className="col">
                 {loading ? (<h4 className="text-danger">Loading...</h4>) : (<h4>Create Category</h4>)}
-                {categoryForm()}
+                {/*{categoryForm()} */}
+                <CategoryForm name={name} setName={setName} handleSubmit={handleSubmit} />
+
+                {/*Step 2*/}
+                {/*Step 2 and step 3 has been modifie dto this */}
+                <LocalSearch keyword={keyword} setKeyword={setKeyword} />
+
+
                 <hr />
                 {categories.length}
-                
-                {categories.map((c) => (<div className="alert alert-secondary" key={c._id}>
+
+
+
+                {/* STEP 5 */}
+                {categories.filter(searched(keyword)).map((c) => (<div className="alert alert-secondary" key={c._id}>
                     {c.name}
                     
                     <span className="btn btn-sm float-right" onClick={() => handleRemove(c.slug)}><DeleteOutlined className="text-danger" /></span> 
