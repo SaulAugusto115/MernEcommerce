@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,Component } from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import {toast} from 'react-toastify'
 import {useSelector} from 'react-redux'
@@ -15,7 +15,8 @@ import { DownOutlined } from '@ant-design/icons';
 const {Item} = Menu
 
 
-const SubCategoryCreate = () => {
+const SubCategoryCreate  = () => {
+
 
     const {user} = useSelector((useState) => ({...useState}))
 
@@ -52,7 +53,7 @@ const SubCategoryCreate = () => {
 
         setLoading(true)
 
-        createSubCategory({name},user.token).then((res) =>{
+        createSubCategory({name, parent: category},user.token).then((res) =>{
 
             setLoading(false)
             setName('')
@@ -135,16 +136,22 @@ const SubCategoryCreate = () => {
                 </Dropdown>*/}
 
 
-<select class="mdb-select md-form">
+{/*<select class="mdb-select md-form">
   <option value="" disabled selected>Choose your option</option>
   <option value="1">Option 1</option>
   <option value="2">Option 2</option>
   <option value="3">Option 3</option>
-</select>
+            </select> */}
 
-                
+                <select className="browser-default custom-select custom-select-lg mb-3"
+                 onChange={e => setCategory(e.target.value)} name="category">
+                <option>Select a Category...</option>
+                {categories.length > 0 && categories.map((c) => { return (
+                        <option key={c._id} value={c._id}>{c.name}</option>
+                     )})}
+                </select>
 
-                <br />
+            
                 <br />
 
                

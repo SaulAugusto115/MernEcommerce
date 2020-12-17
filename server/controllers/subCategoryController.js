@@ -5,10 +5,10 @@ exports.create = async (req,res) => {
 
     try{
 
-        //get the name fromthe front end
-        const {name} = req.body
+        //get the name and the parent from the front end
+        const {name,parent} = req.body
 
-        const subCategory = await new SubCategory({name, slug: slugify(name)}).save()
+        const subCategory = await new SubCategory({name,parent, slug: slugify(name)}).save()
 
         res.json(subCategory)
 
