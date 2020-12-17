@@ -20,9 +20,13 @@ import Wishlist from './pages/user/Wishlist'
 import UseRoute from './components/routes/UserRoute'
 import AdminRoute from './components/routes/AdminRoute'
 
-//admin dashboard actions
+//admin category dashboard actions
 import CategoryCreate from './pages/admin/category/CategoryCreate'
 import CategoryUpdate from './pages/admin/category/CategoryUpdate'
+
+
+//admin sub category actions
+import SubCategoryCreate from './pages/admin/subCategory/SubCategoryCreate'
 
 //admin dashbaord
 import AdminDashboard from './pages/admin/AdminDashboard'
@@ -103,6 +107,7 @@ useEffect(() => {
           <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
           <AdminRoute exact path="/admin/category" component={CategoryCreate} />
           <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
+          <AdminRoute exact path="/admin/subcategory" component={SubCategoryCreate} />
         </Switch>
     </>
   );
