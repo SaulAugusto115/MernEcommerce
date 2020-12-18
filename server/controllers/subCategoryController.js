@@ -50,11 +50,11 @@ exports.read = async (req,res) => {
 
 exports.update = async (req,res) => {
 
-    const {name} = req.body
+    const {name,parent} = req.body
 
     try{
 
-        res.json(await SubCategory.findOneAndUpdate({slug: req.params.slug},{name, slug: slugify(name)},{new: true}))
+        res.json(await SubCategory.findOneAndUpdate({slug: req.params.slug},{name,parent, slug: slugify(name)},{new: true}))
 
 
 
@@ -69,7 +69,7 @@ exports.remove = async (req,res) => {
 
     try{
 
-        res.json(await SubCategory.findByIdAndRemove({slug: req.params.slug}))
+        res.json(await SubCategory.findOneAndDelete({slug: req.params.slug}))
 
 
     }catch(error){

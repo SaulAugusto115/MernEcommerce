@@ -77,7 +77,7 @@ const CategoryCreate = ({history,match}) =>{
 
                 <div className="col">
 
-                {loading ? (<h4 className="text-danger">Loading...</h4>) : (<h4>Upadte Category</h4>)}
+                {loading ? (<h4 className="text-danger">Loading...</h4>) : (<h4>Update Category</h4>)}
                 {updateForm()}
 
                 </div>

@@ -27,6 +27,7 @@ import CategoryUpdate from './pages/admin/category/CategoryUpdate'
 
 //admin sub category actions
 import SubCategoryCreate from './pages/admin/subCategory/SubCategoryCreate'
+import SubCategoryUpdate from './pages/admin/subCategory/SubCategoryUpdate'
 
 //admin dashbaord
 import AdminDashboard from './pages/admin/AdminDashboard'
@@ -108,6 +109,7 @@ useEffect(() => {
           <AdminRoute exact path="/admin/category" component={CategoryCreate} />
           <AdminRoute exact path="/admin/category/:slug" component={CategoryUpdate} />
           <AdminRoute exact path="/admin/subcategory" component={SubCategoryCreate} />
+          <AdminRoute exact path="/admin/subcategory/:slug" component={SubCategoryUpdate} />
         </Switch>
     </>
   );
