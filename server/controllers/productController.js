@@ -14,6 +14,10 @@ exports.create = async (req,res) =>{
 
     }catch(err){
         console.log("Product Create ERROR",err)
-        res.status(400).send("Create Product Failed")
+        //res.status(400).send("Create Product Failed")
+        res.status(400).json({
+            err: err.message,
+
+        })
     }
 }
