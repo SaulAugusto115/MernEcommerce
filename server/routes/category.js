@@ -5,7 +5,7 @@ const router = express.Router()
 const {authCheck, adminCheck} = require('../middlewares/auth')
 
 //controller
-const {create,read,update,remove,list} = require('../controllers/categoryController')
+const {create,read,update,remove,list,getSubCategories} = require('../controllers/categoryController')
 
 
 //routes
@@ -14,5 +14,6 @@ router.get('/categories',list)
 router.get('/category/:slug',read)
 router.put('/category/:slug',authCheck,adminCheck,update)
 router.delete('/category/:slug',authCheck,adminCheck,remove)
+router.get('/category/subcategories/:_id',getSubCategories)
 
 module.exports = router

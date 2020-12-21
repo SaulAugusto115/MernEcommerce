@@ -1,6 +1,15 @@
 import React from 'react'
 
-const ProductForm = ({title,description,price,shipping,quantity,color,colors,brand,brands,handleSubmit,handleChange}) =>{
+const ProductForm = ({handleSubmit,handleChange,values}) =>{
+
+
+    //destructure
+    const {title,description,price,categories, category,subcategories,shipping,quantity,
+    images, colors, brands,color,brand} = values
+
+
+
+
     return(
 
         <form onSubmit={handleSubmit}> 
@@ -21,6 +30,7 @@ const ProductForm = ({title,description,price,shipping,quantity,color,colors,bra
             <div className="form-group">
                 <label>Shipping</label>
                 <select name="shipping" className="form-control" onChange={handleChange}>
+                    <option>Please select...</option>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -50,6 +60,20 @@ const ProductForm = ({title,description,price,shipping,quantity,color,colors,bra
                     )}
                 </select>
             </div>
+
+            <div className="form-group">
+
+            <select className="browser-default custom-select custom-select-lg mb-3"
+                 onChange={handleChange} name="category">
+                <option>Select a Category...</option>
+                {categories.length > 0 && categories.map((c) => { return (
+                        <option key={c._id} value={c._id}>{c.name}</option>
+                     )})}
+                </select>
+
+            </div>
+        
+            
             <br />
             <button className="btn btn-outline-info">Save</button>
         </form>

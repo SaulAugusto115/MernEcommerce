@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom'
 import {createProduct} from '../../../functions/product'
 import ProductForm from '../../../components/forms/ProductForm'
 import {toast} from 'react-toastify'
+import {getCategories} from '../../../functions/category'
 
 const initialState = {
     title:'',
@@ -27,15 +28,21 @@ const initialState = {
 const ProductCreate = () => {
 
     const [values,setValues] = useState(initialState)
+    const [categories,setCategories] = useState([])
 
     const {user} = useSelector((state) => ({...state}))
 
+    useEffect(() => {
+        loadCategories()
+    },[])
 
-    //destructure
-    const {title,description,price,categories, category,subcategories,shipping,quantity,
-    images, colors, brands,color,brand} = values
+    const loadCategories = () => getCategories().then((c) => {
 
+        setValues({...values, categories: c.data})  //c.json({catgeories: c.data})      
 
+    }).catch((err) =>{
+        console.log("Load Categgories in Product Component ERROR".err)
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -72,10 +79,9 @@ const ProductCreate = () => {
                 <div className="col-md-10">
                    <h4>Product Create</h4>
                    <hr />
-                   {JSON.stringify(values)}
-                   <ProductForm title={title} description={description} price={price} shipping={shipping} 
-                   quantity={quantity} color={color} colors={colors} handleSubmit={handleSubmit} handleChange={handleChange} brand={brand} 
-                   brands={brands} />
+                   {/*{JSON.stringify(values)}*/}
+                   {JSON.stringify(values.categories)}
+                   <ProductForm  handleSubmit={handleSubmit} handleChange={handleChange} values={values} />
                 </div>
 
             </div>
