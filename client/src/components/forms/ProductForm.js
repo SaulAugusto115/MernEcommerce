@@ -1,6 +1,8 @@
 import React from 'react'
+import {Select} from 'antd'
+const {Option} = Select
 
-const ProductForm = ({handleSubmit,handleChange,values}) =>{
+const ProductForm = ({handleSubmit,handleChange,setValues,values,handleCategoryChange,subOptions,showSubCategory}) =>{
 
 
     //destructure
@@ -62,9 +64,9 @@ const ProductForm = ({handleSubmit,handleChange,values}) =>{
             </div>
 
             <div className="form-group">
-
+            <label>Categories</label>
             <select className="browser-default custom-select custom-select-lg mb-3"
-                 onChange={handleChange} name="category">
+                 onChange={handleCategoryChange} name="category">
                 <option>Select a Category...</option>
                 {categories.length > 0 && categories.map((c) => { return (
                         <option key={c._id} value={c._id}>{c.name}</option>
@@ -73,8 +75,22 @@ const ProductForm = ({handleSubmit,handleChange,values}) =>{
 
             </div>
         
-            
-            <br />
+
+            {/*{subOptions ? subOptions.length : "No Subcategories yet"}*/}
+            { showSubCategory &&  <div className="form-group">
+            <label>Sub Categories</label>
+            <Select mode="multiple" style={{width: '100%'}} placeholder="Please select..." value={subcategories}
+             onChange={value => setValues({...values, subcategories: value })}>
+
+                {subOptions.length && subOptions.map((s) => ( <Option key={s._id} value={s._id}>{s.name}</Option>))}
+
+               
+            </Select>
+
+            </div>}
+
+             <br />       
+
             <button className="btn btn-outline-info">Save</button>
         </form>
     )
