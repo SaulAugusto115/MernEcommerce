@@ -12,7 +12,7 @@ cloudinary.config({
 exports.upload = async (req,res) => {
     let result = await cloudinary.uploader.upload(req.body.image,{
         public_id:`${Date.now()}`,
-        resource_type: 'auto', //jpg,png,etc...
+        resource_type: "auto", //jpg,png,etc...
     })
 
     res.json({
@@ -23,11 +23,10 @@ exports.upload = async (req,res) => {
 }
 
 exports.remove = (req,res) => {
-    let image_id = req.body.public_id
+    let image_id = req.body.public_id;
 
-    cloudinary.uploader.destroy(image_id,(err, result) => {
-        if(err) return res.json({success: false,err})
-
-        result.send("Ok")
-    })
+  cloudinary.uploader.destroy(image_id, (err, result) => {
+    if (err) return res.json({ success: false, err });
+    res.send("ok");
+  });
 }

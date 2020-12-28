@@ -7,6 +7,7 @@ import ProductForm from '../../../components/forms/ProductForm'
 import {toast} from 'react-toastify'
 import {getCategories,getCategorySubCategories} from '../../../functions/category'
 import FileUpload from '../../../components/forms/FileUpload'
+import {LoadingOutlined} from '@ant-design/icons'
 
 const initialState = {
     title:'',
@@ -32,6 +33,7 @@ const ProductCreate = () => {
     const [categories,setCategories] = useState([])
     const [subOptions,setSubOptions] = useState([])
     const [showSubCategory,setShowSubCategory] = useState(false)
+    const [loading,setLoading] = useState(false)
 
     const {user} = useSelector((state) => ({...state}))
 
@@ -97,12 +99,18 @@ const ProductCreate = () => {
                 </div>
 
                 <div className="col-md-10">
-                   <h4>Product Create</h4>
+                   {loading ? (<LoadingOutlined className="text-danger h1" />) : (<h4>Product Create</h4>)}
                    <hr />
-                   {JSON.stringify(values.subcategories)}
+                   {/*{JSON.stringify(values.subcategories)}*/}
+                   {JSON.stringify(values.images)}
 
+                    
                     <div className="p-3">
-                        <FileUpload />
+                    <FileUpload
+                        values={values}
+                        setValues={setValues}
+                        setLoading={setLoading}
+                     />
                     </div>
 
                    {/*{JSON.stringify(values.categories)}*/}
