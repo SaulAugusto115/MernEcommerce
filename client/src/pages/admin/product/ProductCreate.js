@@ -6,6 +6,7 @@ import {createProduct} from '../../../functions/product'
 import ProductForm from '../../../components/forms/ProductForm'
 import {toast} from 'react-toastify'
 import {getCategories,getCategorySubCategories} from '../../../functions/category'
+import FileUpload from '../../../components/forms/FileUpload'
 
 const initialState = {
     title:'',
@@ -82,7 +83,7 @@ const ProductCreate = () => {
             console.log("SUB OPTIONS CATEGORY CLICK",res)
             setSubOptions(res.data)
         });
-
+        
         setShowSubCategory(true)
     }
 
@@ -99,6 +100,11 @@ const ProductCreate = () => {
                    <h4>Product Create</h4>
                    <hr />
                    {JSON.stringify(values.subcategories)}
+
+                    <div className="p-3">
+                        <FileUpload />
+                    </div>
+
                    {/*{JSON.stringify(values.categories)}*/}
                    <ProductForm  handleSubmit={handleSubmit} handleChange={handleChange} setValues={setValues}
                    values={values} handleCategoryChange={handleCategoryChange} subOptions={subOptions} showSubCategory={showSubCategory} />

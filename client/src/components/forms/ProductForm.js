@@ -50,7 +50,9 @@ const ProductForm = ({handleSubmit,handleChange,setValues,values,handleCategoryC
                     {colors.map(c => 
                         <option key={c} value={c}>{c}</option>
                     )}
-                </select>
+                    </select>
+                   
+
             </div>
 
             <div className="form-group">
@@ -77,7 +79,7 @@ const ProductForm = ({handleSubmit,handleChange,setValues,values,handleCategoryC
         
 
             {/*{subOptions ? subOptions.length : "No Subcategories yet"}*/}
-            { showSubCategory &&  <div className="form-group">
+            { showSubCategory  &&  <div className="form-group">
             <label>Sub Categories</label>
             <Select mode="multiple" style={{width: '100%'}} placeholder="Please select..." value={subcategories}
              onChange={value => setValues({...values, subcategories: value })}>
