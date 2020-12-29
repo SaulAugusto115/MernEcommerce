@@ -15,7 +15,7 @@ const initialState = {
     price:'',
     category:'',
     categories: [],
-    subcategories: [],
+    subcategory: [],
     shipping: '',
     quantity:'',
     images:[],
@@ -78,7 +78,7 @@ const ProductCreate = () => {
 
         console.log("Clicked Category",e.target.value)
 
-        setValues({...values,subcategories: [], category: e.target.value})
+        setValues({...values,subcategory: [], category: e.target.value})
 
 
         getCategorySubCategories(e.target.value).then(res =>{

@@ -3,11 +3,12 @@ const router = express.Router()
 
 const {authCheck,adminCheck} = require('../middlewares/auth')
 
-const {create, read} = require('../controllers/productController')
+const {create,listAll} = require('../controllers/productController')
 
 
 //routes
 router.post("/product",authCheck,adminCheck,create)
-router.get("/products",read)
+//router.get("/products",read)
+router.get("/products/:count",listAll)
 
 module.exports = router

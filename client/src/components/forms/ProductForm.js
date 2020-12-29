@@ -6,7 +6,7 @@ const ProductForm = ({handleSubmit,handleChange,setValues,values,handleCategoryC
 
 
     //destructure
-    const {title,description,price,categories, category,subcategories,shipping,quantity,
+    const {title,description,price,categories, category,subcategory,shipping,quantity,
     images, colors, brands,color,brand} = values
 
 
@@ -81,8 +81,8 @@ const ProductForm = ({handleSubmit,handleChange,setValues,values,handleCategoryC
             {/*{subOptions ? subOptions.length : "No Subcategories yet"}*/}
             { showSubCategory  &&  <div className="form-group">
             <label>Sub Categories</label>
-            <Select mode="multiple" style={{width: '100%'}} placeholder="Please select..." value={subcategories}
-             onChange={value => setValues({...values, subcategories: value })}>
+            <Select mode="multiple" style={{width: '100%'}} placeholder="Please select..." value={subcategory}
+             onChange={value => setValues({...values, subcategory: value })}>
 
                 {subOptions.length && subOptions.map((s) => ( <Option key={s._id} value={s._id}>{s.name}</Option>))}
 
