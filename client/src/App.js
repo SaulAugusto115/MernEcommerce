@@ -31,6 +31,7 @@ import SubCategoryUpdate from './pages/admin/subCategory/SubCategoryUpdate'
 
 //admin Product actions
 import ProductCreate from './pages/admin/product/ProductCreate'
+import AllProducts from './pages/admin/product/AllProducts'
 
 
 //admin dashbaord
@@ -115,6 +116,7 @@ useEffect(() => {
           <AdminRoute exact path="/admin/subcategory" component={SubCategoryCreate} />
           <AdminRoute exact path="/admin/subcategory/:slug" component={SubCategoryUpdate} />
           <AdminRoute exact path="/admin/product" component={ProductCreate} />
+          <AdminRoute exact path="/admin/products" component={AllProducts} />
         </Switch>
     </>
   );

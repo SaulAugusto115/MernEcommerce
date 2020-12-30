@@ -3,12 +3,13 @@ const router = express.Router()
 
 const {authCheck,adminCheck} = require('../middlewares/auth')
 
-const {create,listAll} = require('../controllers/productController')
+const {create,listAll,remove} = require('../controllers/productController')
 
 
 //routes
 router.post("/product",authCheck,adminCheck,create)
 //router.get("/products",read)
 router.get("/products/:count",listAll)
+router.delete("/product/:slug",authCheck,adminCheck,remove)
 
 module.exports = router
