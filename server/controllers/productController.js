@@ -1,6 +1,9 @@
 const Product = require('../models/product')
 const slugify = require('slugify')
 
+
+//here will appear all endpoints
+
 exports.create = async (req,res) =>{
     try{
 
@@ -48,3 +51,9 @@ exports.remove = async (req, res) => {
       return res.staus(400).send("Product delete failed");
     }
   };
+
+  exports.read = async (req,res) => {
+    const product = await Product.findOne({slug: req.params.slug}).populate('category').populate('subcategory').exec()
+
+    res.json(product)
+  }
