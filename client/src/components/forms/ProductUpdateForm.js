@@ -2,11 +2,14 @@ import React from 'react'
 import {Select} from 'antd'
 const {Option} = Select
 
-const ProductUpdateForm = ({handleSubmit,handleChange,setValues,values}) =>{
+const ProductUpdateForm = ({handleSubmit,handleChange,setValues,values,handleCategoryChange,categories,subOptions,arrayOfSubs,setArrayOfSubIds,selectedCategory}) =>{
 
 
     //destructure
-    const {title,description,price,categories, category,subcategory,shipping,quantity,
+    const {title,description,price,
+        //categories, 
+        category,
+        subcategory,shipping,quantity,
     images, colors, brands,color,brand} = values
 
     
@@ -30,8 +33,7 @@ const ProductUpdateForm = ({handleSubmit,handleChange,setValues,values}) =>{
 
             <div className="form-group">
                 <label>Shipping</label>
-                <select name="shipping" className="form-control" onChange={handleChange}>
-                    <option>Please select...</option>
+                <select value={shipping === 'Yes' ? "Yes" : "No"} name="shipping" className="form-control" onChange={handleChange}>
                     <option value="No">No</option>
                     <option value="Yes">Yes</option>
                 </select>
@@ -44,8 +46,8 @@ const ProductUpdateForm = ({handleSubmit,handleChange,setValues,values}) =>{
 
             <div className="form-group">
                 <label>Color</label>
-                <select name="color" className="form-control" onChange={handleChange}>
-                    <option>Please select...</option>
+                <select value={color} name="color" className="form-control" onChange={handleChange}>
+                    
                     {colors.map(c => 
                         <option key={c} value={c}>{c}</option>
                     )}
@@ -56,12 +58,39 @@ const ProductUpdateForm = ({handleSubmit,handleChange,setValues,values}) =>{
 
             <div className="form-group">
                 <label>Brand</label>
-                <select name="brand" className="form-control" onChange={handleChange}>
-                    <option>Please select...</option>
+                <select value={brand} name="brand" className="form-control" onChange={handleChange}>
+                    
                     {brands.map(b => 
                         <option key={b} value={b}>{b}</option>
                     )}
                 </select>
+            </div>
+
+
+            <div className="form-group">
+            <label>Categories</label>
+            <select className="browser-default custom-select custom-select-lg mb-3"
+                 onChange={handleCategoryChange} name="category" value={selectedCategory ? selectedCategory : category._id}>
+                
+                
+                {categories.length > 0 && categories.map((c) => { return (
+                        <option key={c._id} value={c._id}>{c.name}</option>
+                     )})}
+                </select>
+
+            </div>
+
+
+            <div className="form-group">
+            <label>Sub Categories</label>
+            <Select mode="multiple" style={{width: '100%'}} placeholder="Please select..." value={arrayOfSubs}
+             onChange={value => setArrayOfSubIds(value)}>
+
+                {subOptions.length && subOptions.map((s) => ( <Option key={s._id} value={s._id}>{s.name}</Option>))}
+
+               
+            </Select>
+
             </div>
 
            
