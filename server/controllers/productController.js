@@ -1,5 +1,6 @@
 const Product = require('../models/product')
 const slugify = require('slugify')
+const e = require('express')
 
 
 //here will appear all endpoints
@@ -92,6 +93,22 @@ exports.remove = async (req, res) => {
 
     }catch(err){
       console.log("PRODUCT LIST ERROR",err)
+
+      res.status(400).json({
+        err: err.message
+      })
+    }
+  }
+
+  exports.productsCount = async (req,res) => {
+    try{
+
+      let total = await Product.find({}).estimatedDocumentCount().exec()
+
+      res.json(total)
+
+    }catch(err){
+      console.log("Get Products Count ERROR",err)
 
       res.status(400).json({
         err: err.message
