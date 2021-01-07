@@ -12,9 +12,10 @@ const ProductCard = ({product}) => {
     const {title,images,description,slug} = product
 
     return(
+        
        <Card 
         cover={ <img src={images && images.length ? images[0].url : laptop} 
-        style={{height: '270px', objectFit: 'cover'}} className="p-1" /> } 
+        style={{height: '250px', objectFit: 'cover'}} className="p-1" /> } 
         actions={[
             <Link to={`/product/${slug}`}>
             <EyeOutlined  className="text-primary" /> <br /> View Product

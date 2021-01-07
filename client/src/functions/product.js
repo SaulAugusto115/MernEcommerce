@@ -23,3 +23,5 @@ export const updateProduct = async (slug,product,authtoken) => await axios.put(`
         authtoken
     }
 })
+
+export const getProducts = async (sort,order,limit) => await axios.post(`http://localhost:8000/api/products/`,{sort,order,limit})

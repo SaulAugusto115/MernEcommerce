@@ -80,3 +80,21 @@ exports.remove = async (req, res) => {
       })
       }
   }
+
+  exports.list = async(req,res) => {
+    try{
+      //thro sort would be something like createdAt/updatedAt and ordre would be somtehinglike ascending or descending
+      const {sort,order,limit} = req.body
+
+      const products = await Product.find({}).populate("category").populate("subcategory").sort([[sort, order]]).limit(limit).exec()
+
+      res.json(products)
+
+    }catch(err){
+      console.log("PRODUCT LIST ERROR",err)
+
+      res.status(400).json({
+        err: err.message
+      })
+    }
+  }
