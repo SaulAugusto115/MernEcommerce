@@ -24,4 +24,8 @@ export const updateProduct = async (slug,product,authtoken) => await axios.put(`
     }
 })
 
-export const getProducts = async (sort,order,limit) => await axios.post(`http://localhost:8000/api/products/`,{sort,order,limit})
+//export const getProducts = async (sort,order,limit) => await axios.post(`http://localhost:8000/api/products/`,{sort,order,limit})
+
+export const getProducts = async (sort,order,page) => await axios.post(`http://localhost:8000/api/products/`,{sort,order,page})
+
+export const getProductsCount = async () => await axios.get(`http://localhost:8000/api/products/total`)

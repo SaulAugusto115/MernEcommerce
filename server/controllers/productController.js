@@ -82,7 +82,8 @@ exports.remove = async (req, res) => {
       }
   }
 
-  exports.list = async(req,res) => {
+  // WITHOUT PAGINATION
+ /* exports.list = async(req,res) => {
     try{
       //thro sort would be something like createdAt/updatedAt and ordre would be somtehinglike ascending or descending
       const {sort,order,limit} = req.body
@@ -98,7 +99,32 @@ exports.remove = async (req, res) => {
         err: err.message
       })
     }
-  }
+  } */
+
+    // WITH PAGINATION
+  exports.list = async(req,res) => {
+
+    console.log(req.body)
+
+    try{
+      //thro sort would be something like createdAt/updatedAt and ordre would be somtehinglike ascending or descending
+      const {sort,order,page} = req.body
+      const currentPage = page || 1
+      const perPage = 3
+
+      const products = await Product.find({})
+      .skip((currentPage - 1) * perPage).populate("category").populate("subcategory").sort([[sort, order]]).limit(perPage).exec()
+
+      res.json(products)
+
+    }catch(err){
+      console.log("PRODUCT LIST ERROR",err)
+
+      res.status(400).json({
+        err: err.message
+      })
+    }
+  } 
 
   exports.productsCount = async (req,res) => {
     try{
