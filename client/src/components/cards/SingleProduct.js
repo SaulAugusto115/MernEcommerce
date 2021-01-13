@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Tabs} from 'antd'
+import {Card, Tabs,Input} from 'antd'
 import {Link} from 'react-router-dom'
 import {HeartOutlined,ShoppingCartOutlined} from '@ant-design/icons'
 import {Carousel} from 'react-responsive-carousel'
@@ -7,16 +7,20 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import Laptop from '../../images/laptop.png'
 import ProductListItems from './ProductListItems'
 import SliderImage from 'react-zoom-slider'
+import StarRating from 'react-star-ratings' 
+import RatingModal from '../modal/RatingModal'
 
 const {Meta} = Card;
 
 const {TabPane} = Tabs;
 
+const { TextArea } = Input;
+
 const SingleProduct = ({product}) => {
 
-    const {title,images,description} = product;
+    const {title,images,description,_id} = product;
 
-    const data = [
+    /*const data = [
         {
           image: images.url,
           text: 'img1'
@@ -29,7 +33,7 @@ const SingleProduct = ({product}) => {
           image: 'https://cdn.tgdd.vn/Products/Images/42/209800/oppo-reno2-f-xanh-10-org.jpg',
           text: 'img3'
         },
-      ];
+      ];*/
 
     return(
         <>
@@ -62,6 +66,15 @@ const SingleProduct = ({product}) => {
                <h1 className="bg-info p-3">
                     {title}
                 </h1>
+
+                
+               
+
+                <div>
+                  
+                  <hr/>
+                  <h4>Review</h4>
+                </div>
                 
 
                <Card
@@ -72,7 +85,26 @@ const SingleProduct = ({product}) => {
                 </>,
                 <Link to='/'>
                  <HeartOutlined className="text-info" /> <br/>  Add to Wishlist
-                </Link>
+                </Link>,
+                <RatingModal>
+
+                          <StarRating
+                            name={_id}
+                            numberOfStars={5}
+                            rating={2}
+                            changeRating={(newRating, name) =>
+                              console.log('New Rating',newRating,'Name',name)
+                           }
+
+                            isSelectable={true}
+                            starRatedColor="red"
+                          />
+
+                          <br/>
+                          <TextArea showCount maxLength={2500} />
+
+                </RatingModal>
+
                  ]}
                
                

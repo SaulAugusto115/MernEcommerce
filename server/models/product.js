@@ -57,7 +57,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         enum: ["Apple","Samsung","Microsoft","Lenovo","Asus"]
     },
-    /*ratings:[{
+    ratings:[{
         star: Number,
         postedBy: {
             type: ObjectId,
@@ -71,7 +71,7 @@ const productSchema = new mongoose.Schema({
             type: ObjectId,
             ref: "User"
         }
-    }] */
+    }] 
 },{timestamps: true})
 
 module.exports = mongoose.model("Product",productSchema)
