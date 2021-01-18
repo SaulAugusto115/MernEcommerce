@@ -27,22 +27,44 @@ const {user} = useSelector((state) => ({...state}))
 
 
 
-const roleBasedRedirect = (res) =>{
-    if(res.data.role === "admin")
-    {
-        history.push("/admin/dashboard")
+useEffect(() =>{
+
+    let intended = history.location.state
+
+    if(intended){
+        return;
     }else{
-        history.push("/user/history")
+        if(user && user.token)  history.push("/");
     }
+   
+
+},[user,history]);
+
+
+const roleBasedRedirect = (res) =>{
+    
+    //check if intended
+    let intented = history.location.state;
+
+    //console.log('HISTORY LOCATION STATE',intented)
+
+    if(intented){
+        history.push(intented.from)
+    }else{
+
+        if(res.data.role === "admin")
+        {
+            history.push("/admin/dashboard")
+        }else{
+            history.push("/user/history")
+        }
+
+    }
+
+    
 }
 
 
-useEffect(() =>{
-
-    if(user && user.token)  history.push("/");
-    
-
-},[user]);
 
 
 
@@ -79,8 +101,8 @@ const handleSubmit = async (e) =>{
             roleBasedRedirect(res)
 
         }).catch((error) =>{
-        console.log("ERROR" ,error)
-    });
+            console.log("ERROR" ,error)
+        });
     
 
     /*dispatch({
@@ -131,7 +153,7 @@ const googleLogin = async () =>{
             console.log("ERROR" ,error)
         });
 
-        history.push("/")
+        //history.push("/")
         
     }).catch((error) => {
         console.log(error)
@@ -165,7 +187,7 @@ const facebookLogin = async () =>{
             console.log("ERROR" ,error)
         });
 
-        history.push("/")
+        //history.push("/")
     }).catch((error) =>{
         console.log(error)
         toast.error(error.message)

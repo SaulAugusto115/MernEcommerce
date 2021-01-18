@@ -29,3 +29,17 @@ export const updateProduct = async (slug,product,authtoken) => await axios.put(`
 export const getProducts = async (sort,order,page) => await axios.post(`http://localhost:8000/api/products/`,{sort,order,page})
 
 export const getProductsCount = async () => await axios.get(`http://localhost:8000/api/products/total`)
+
+
+//rating and review functions
+export const productStar = async (productId,star,authtoken) => await axios.put(`http://localhost:8000/api/product/star/${productId}`,{star},{
+    headers:{
+        authtoken
+    }
+})
+
+export const productReview = async (productId,review,authtoken) => await axios.put(`http://localhost:8000/api/product/review/${productId}`,{review},{
+    headers:{
+        authtoken
+    }
+})

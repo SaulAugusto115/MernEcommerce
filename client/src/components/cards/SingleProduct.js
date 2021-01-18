@@ -16,7 +16,9 @@ const {TabPane} = Tabs;
 
 const { TextArea } = Input;
 
-const SingleProduct = ({product}) => {
+
+//this is children component of Product Page
+const SingleProduct = ({product,onStarClick,onLeaveReview,star,review}) => {
 
     const {title,images,description,_id} = product;
 
@@ -34,6 +36,18 @@ const SingleProduct = ({product}) => {
           text: 'img3'
         },
       ];*/
+
+      /*onChange = ({ target: { value } }) => {
+        this.setState({ value });
+      };
+
+      state = {
+        value: '',
+      };
+
+      const onChangeReview = ({ target: { value } }) =>{
+        this.setState({ value });
+      }*/
 
     return(
         <>
@@ -91,17 +105,35 @@ const SingleProduct = ({product}) => {
                           <StarRating
                             name={_id}
                             numberOfStars={5}
-                            rating={2}
-                            changeRating={(newRating, name) =>
+                            rating={star}
+                            
+                            /*changeRating={(newRating, name) =>
                               console.log('New Rating',newRating,'Name',name)
-                           }
+                           }*/
+
+                           changeRating={onStarClick}
 
                             isSelectable={true}
                             starRatedColor="red"
+                            
                           />
 
                           <br/>
-                          <TextArea showCount maxLength={2500} />
+                          {/*<TextArea showCount maxLength={2500} />*/}
+                          <TextArea
+                            //value={value}
+                            //onChange={this.onChange}
+                            showCount
+                            maxLength={2500}
+                            placeholder="Please Write a Review..."
+                            autoSize={{ minRows: 3, maxRows: 5 }}
+                            name={_id}
+                            //changeRating={(newReview,name) => console.log('New Review',newReview,'Name',name)}
+                            //changeRating={onLeaveReview}
+                            //value={review}
+                            onChange={onLeaveReview}
+                            
+                          />
 
                 </RatingModal>
 
